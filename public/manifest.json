@@ -1,0 +1,27 @@
+{
+  "name": "Nathafty - Enquête Gestion des Déchets",
+  "short_name": "Nathafty Survey",
+  "description": "Application d'enquête sur la gestion des déchets pour Nathafty",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "lang": "fr-FR",
+  "dir": "ltr"
+}
