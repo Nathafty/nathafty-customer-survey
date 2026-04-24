@@ -14,6 +14,7 @@ interface SurveyRequestBody {
   mainConcern: string;
   paysService: 'Oui' | 'Non';
   monthlyPayment?: string;
+  deviceId?: string;
 }
 
 /**
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
       main_concern: body.mainConcern.trim(),
       pays_service: body.paysService === 'Oui',
       monthly_payment: body.monthlyPayment?.trim() || undefined,
+      device_id: body.deviceId?.trim() || undefined,
     };
 
     // Insérer dans Supabase
