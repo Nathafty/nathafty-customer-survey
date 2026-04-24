@@ -27,7 +27,9 @@ export default function SurveyForm({ onSubmit }: SurveyFormProps) {
   useEffect(() => {
     let id = localStorage.getItem('nathafty_device_id');
     if (!id) {
-      id = crypto.randomUUID();
+      id = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+        ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2) + Date.now().toString(36);
       localStorage.setItem('nathafty_device_id', id);
     }
     setDeviceId(id);
