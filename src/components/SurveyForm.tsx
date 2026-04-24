@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface SurveyFormProps {
   onSubmit: (data: any) => void;
@@ -19,9 +19,19 @@ export default function SurveyForm({ onSubmit }: SurveyFormProps) {
     monthlyPayment: '',
   });
 
+  const [deviceId, setDeviceId] = useState('');
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let id = localStorage.getItem('nathafty_device_id');
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem('nathafty_device_id', id);
+    }
+    setDeviceId(id);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -63,7 +73,7 @@ export default function SurveyForm({ onSubmit }: SurveyFormProps) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, deviceId }),
         });
 
         const result = await response.json();
@@ -269,17 +279,18 @@ export default function SurveyForm({ onSubmit }: SurveyFormProps) {
           {formData.paysService === 'Oui' && (
             <div className="mt-3 pl-6 border-l-4 border-secondary">
               <label htmlFor="monthlyPayment" className="block text-sm font-medium text-gray-700 mb-1">
-                Combien environ par collecte ? *
+                Combien environ par collecte ? (MRU) *
               </label>
               <div className="flex items-center gap-2">
                 <input
-                  type="text"
+                  type="number"
                   id="monthlyPayment"
                   name="monthlyPayment"
+                  min="0"
                   value={formData.monthlyPayment}
                   onChange={handleChange}
                   className={`input-field ${errors.monthlyPayment ? 'border-red-500' : ''}`}
-                  placeholder="Ex: 5000 MRU"
+                  placeholder="Ex: 5000"
                 />
               </div>
               {errors.monthlyPayment && <p className="mt-1 text-sm text-red-600">{errors.monthlyPayment}</p>}
