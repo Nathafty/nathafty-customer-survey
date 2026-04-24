@@ -10,6 +10,7 @@ export interface SurveyData {
   main_concern: string;
   pays_service: boolean;
   monthly_payment?: string;
+  device_id?: string;
 }
 
 export interface SurveyRecord extends SurveyData {
