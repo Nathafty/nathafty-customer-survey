@@ -3,8 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 // Configuration Supabase
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-// Lire d'abord sans préfixe (server-only, recommandé), sinon avec NEXT_PUBLIC_ (fallback legacy)
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY || '';
+// Server-only : ne jamais lire cette clé via une variable préfixée NEXT_PUBLIC_,
+// ce qui l'exposerait au bundle client.
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 // Client pour le frontend (avec anon key)
 export const supabase = supabaseUrl && supabaseAnonKey 

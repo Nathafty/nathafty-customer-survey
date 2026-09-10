@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { BarChart3, Trash2, Package, MessageSquare, Wallet, User, Phone, MessageCircle } from 'lucide-react';
 
 interface ResultsChartProps {
   data: any;
@@ -22,7 +23,7 @@ export default function ResultsChart({ data }: ResultsChartProps) {
 
       const Chart = (window as any).Chart;
       const ctx = chartRef.current?.getContext('2d');
-      
+
       if (!ctx) return;
 
       // Détruire le graphique existant s'il existe
@@ -107,54 +108,53 @@ export default function ResultsChart({ data }: ResultsChartProps) {
     };
   }, [data]);
 
+  const rows = [
+    { icon: Trash2, label: 'Fréquence de sortie', value: data.trashFrequency },
+    { icon: Package, label: 'Production de déchets', value: `${data.bagsPerWeek} sac(s) / semaine — ${data.bagType}` },
+    { icon: MessageSquare, label: 'Principale préoccupation', value: data.mainConcern },
+    {
+      icon: Wallet,
+      label: 'Service de collecte',
+      value: data.paysService === 'Oui' && data.monthlyPayment
+        ? `${data.paysService} — ${data.monthlyPayment}`
+        : data.paysService,
+    },
+  ];
+
   return (
     <div className="card">
-      <h3 className="text-xl font-semibold text-primary mb-6 text-center">
-        📊 Récapitulatif de votre enquête
+      <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 mb-6">
+        <BarChart3 className="w-5 h-5 text-primary-500" aria-hidden="true" />
+        Récapitulatif de votre enquête
       </h3>
-      
+
       <div className="mb-6">
         <canvas ref={chartRef} />
       </div>
 
-      {/* Résumé des réponses */}
-      <div className="mt-8 space-y-4 border-t pt-6">
-        <h4 className="font-semibold text-gray-700 mb-4 text-lg">📋 Résumé de vos réponses :</h4>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-primary">
-            <p className="text-xs text-gray-600 mb-1">1️⃣ Fréquence de sortie</p>
-            <p className="text-lg font-semibold text-primary">{data.trashFrequency}</p>
+      <div className="space-y-3 border-t border-gray-100 pt-5">
+        {rows.map((row) => (
+          <div key={row.label} className="flex items-start gap-3">
+            <row.icon className="w-4 h-4 text-primary-500 mt-0.5 flex-shrink-0" aria-hidden="true" />
+            <div>
+              <p className="text-xs text-gray-500">{row.label}</p>
+              <p className="text-sm font-medium text-gray-900">{row.value}</p>
+            </div>
           </div>
-          
-          <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-secondary">
-            <p className="text-xs text-gray-600 mb-1">2️⃣ Production de déchets</p>
-            <p className="text-lg font-semibold text-secondary">
-              {data.bagsPerWeek} sac(s) / semaine
+        ))}
+
+        <div className="flex items-start gap-3 pt-2 border-t border-gray-100">
+          <User className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
+          <div>
+            <p className="text-sm font-medium text-gray-900">{data.name}</p>
+            <p className="text-xs text-gray-500 flex items-center gap-1">
+              <Phone className="w-3 h-3" aria-hidden="true" /> {data.phone}
             </p>
-            <p className="text-sm text-gray-600 mt-1">Type: {data.bagType}</p>
-          </div>
-
-          <div className="bg-green-50 p-4 rounded-lg border-l-4 border-accent col-span-1 md:col-span-2">
-            <p className="text-xs text-gray-600 mb-2">3️⃣ Principale préoccupation</p>
-            <p className="text-gray-700 italic">&ldquo;{data.mainConcern}&rdquo;</p>
-          </div>
-
-          <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
-            <p className="text-xs text-gray-600 mb-1">4️⃣ Service de collecte</p>
-            <p className="text-lg font-semibold text-purple-700">{data.paysService}</p>
-            {data.paysService === 'Oui' && data.monthlyPayment && (
-              <p className="text-sm text-gray-600 mt-1">
-                Coût: {data.monthlyPayment}
+            {data.whatsapp && (
+              <p className="text-xs text-gray-500 flex items-center gap-1">
+                <MessageCircle className="w-3 h-3" aria-hidden="true" /> {data.whatsapp}
               </p>
             )}
-          </div>
-
-          <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-gray-400">
-            <p className="text-xs text-gray-600 mb-1">👤 Contact</p>
-            <p className="text-sm font-semibold text-gray-700">{data.name}</p>
-            <p className="text-xs text-gray-600">📞 {data.phone}</p>
-            {data.whatsapp && <p className="text-xs text-gray-600">💬 {data.whatsapp}</p>}
           </div>
         </div>
       </div>

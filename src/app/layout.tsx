@@ -3,8 +3,8 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Nathafty - Enquête de Satisfaction Client",
-  description: "Questionnaire d'enquête sur la gestion des déchets Nathafty",
+  title: "Nathafty - Mon espace client",
+  description: "Collecte, abonnement, réclamations et suivi de compte Nathafty",
   manifest: "/manifest.json",
 };
 
@@ -23,11 +23,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        {/* Chart.js via CDN */}
-        <Script
-          src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
-          strategy="beforeInteractive"
-        />
         {/* PWA Meta Tags */}
         <meta name="application-name" content="Nathafty" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

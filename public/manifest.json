@@ -1,7 +1,7 @@
 {
-  "name": "Nathafty - Enquête Gestion des Déchets",
-  "short_name": "Nathafty Survey",
-  "description": "Application d'enquête sur la gestion des déchets pour Nathafty",
+  "name": "Nathafty - Mon espace client",
+  "short_name": "Nathafty",
+  "description": "Collecte, abonnement, réclamations et suivi de compte Nathafty",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
